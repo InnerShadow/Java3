@@ -1,33 +1,12 @@
 package rfe.bsu.SikolenkoMa.laba3;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Toolkit;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.DataOutputStream;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.PrintStream;
-import javax.swing.AbstractAction;
-import javax.swing.Action;
-import javax.swing.BorderFactory;
-import javax.swing.Box;
-import javax.swing.JButton;
-import javax.swing.JFileChooser;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
+import java.io.*;
+import javax.imageio.ImageIO;
+import javax.swing.*;
 
-import javax.swing.JTextField;
 @SuppressWarnings("serial")
 class MainFrame extends JFrame {
     // Константы с исходным размером окна приложения
@@ -44,14 +23,17 @@ class MainFrame extends JFrame {
     private JMenuItem saveToTextMenuItem;
     private JMenuItem saveToGraphicsMenuItem;
     private JMenuItem searchValueMenuItem;
+
+
+    private JMenuItem getInfoAboutAuther;
     // Поля ввода для считывания значений переменных
     private JTextField textFieldFrom;
     private JTextField textFieldTo;
     private JTextField textFieldStep;
+
     private Box hBoxResult;
     // Визуализатор ячеек таблицы
-    private GornerTableCellRenderer renderer = new
-            GornerTableCellRenderer();
+    private GornerTableCellRenderer renderer = new GornerTableCellRenderer();
     // Модель данных с результатами вычислений
     private GornerTableModel data;
 
@@ -78,6 +60,10 @@ class MainFrame extends JFrame {
         JMenu tableMenu = new JMenu("Таблица");
 // Добавить его в главное меню
         menuBar.add(tableMenu);
+
+        JMenu AboutMenu = new JMenu("About program");
+        menuBar.add(AboutMenu);
+
 // Создать новое "действие" по сохранению в текстовый файл
         Action saveToTextAction = new AbstractAction("Сохранить в текстовый файл") {
             public void actionPerformed(ActionEvent event) {
@@ -141,6 +127,30 @@ class MainFrame extends JFrame {
         searchValueMenuItem = tableMenu.add(searchValueAction);
 // По умолчанию пункт меню является недоступным (данных ещѐ нет)
         searchValueMenuItem.setEnabled(false);
+
+        File file = new File("./Auther.jpg");
+        Image img = null;
+        try {
+            img = ImageIO.read(file);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        ImageIcon imgIcon = new ImageIcon(img);
+        Image image = imgIcon.getImage();
+        Image newimg = image.getScaledInstance(150, 150,  java.awt.Image.SCALE_SMOOTH);
+        imgIcon = new ImageIcon(newimg);
+        ImageIcon finalImgIcon = imgIcon;
+        Action GetInfo = new AbstractAction("About auther") {
+            public void actionPerformed(ActionEvent event) {
+                JOptionPane.showMessageDialog(null,"Michail, Sikolenko, groop 9", "Auther",
+                        JOptionPane.INFORMATION_MESSAGE, finalImgIcon);
+            }
+        };
+
+        getInfoAboutAuther = AboutMenu.add(GetInfo);
+        getInfoAboutAuther.setEnabled(true);
+
+
 // Создать область с полями ввода для границ отрезка и шага
 // Создать подпись для ввода левой границы отрезка
         JLabel labelForFrom = new JLabel("X изменяется на интервале от:");
@@ -196,6 +206,8 @@ class MainFrame extends JFrame {
         hboxRange.add(textFieldStep);
 // Добавить "клей" C1-H7
         hboxRange.add(Box.createHorizontalGlue());
+
+
 // Установить предпочтительный размер области равным удвоенному
 // минимальному, чтобы при компоновке область совсем не сдавили
         hboxRange.setPreferredSize(new Dimension(

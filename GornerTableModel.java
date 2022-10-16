@@ -46,6 +46,9 @@ public class GornerTableModel extends AbstractTableModel {
 // Вычисление значения в точке по схеме Горнера.
 // Вспомнить 1-ый курс и реализовать
 // ...
+
+            //TODO: Realaze Gorgner scheam
+
             for(int i = coefficients.length - 1; i >= 0; i--){
                 result += coefficients[i] * Math.pow(x, coefficients.length - 1 - i);
             }
