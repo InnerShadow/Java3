@@ -222,20 +222,15 @@ class MainFrame extends JFrame {
             public void actionPerformed(ActionEvent ev) {
                 try {
 // Считать значения начала и конца отрезка, шага
-                    Double from =
-                            Double.parseDouble(textFieldFrom.getText());
-                    Double to =
-                            Double.parseDouble(textFieldTo.getText());
-                    Double step =
-                            Double.parseDouble(textFieldStep.getText());
+                    Double from = Double.parseDouble(textFieldFrom.getText());
+                    Double to = Double.parseDouble(textFieldTo.getText());
+                    Double step = Double.parseDouble(textFieldStep.getText());
 // На основе считанных данных создать новый экземпляр модели таблицы
-                    data = new GornerTableModel(from, to, step,
-                            MainFrame.this.coefficients);
+                    data = new GornerTableModel(from, to, step, MainFrame.this.coefficients);
 // Создать новый экземпляр таблицы
                     JTable table = new JTable(data);
 // Установить в качестве визуализатора ячеек для класса Double разработанный визуализатор
-                    table.setDefaultRenderer(Double.class,
-                            renderer);
+                    table.setDefaultRenderer(Double.class, renderer);
 // Установить размер строки таблицы в 30 пикселов
                     table.setRowHeight(30);
 // Удалить все вложенные элементы из контейнера hBoxResult
@@ -301,12 +296,13 @@ class MainFrame extends JFrame {
     protected void saveToGraphicsFile(File selectedFile) {
         try {
 // Создать новый байтовый поток вывода, направленный в указанный файл
-            DataOutputStream out = new DataOutputStream(new
-                    FileOutputStream(selectedFile));
+            DataOutputStream out = new DataOutputStream(new FileOutputStream(selectedFile));
 // Записать в поток вывода попарно значение X в точке, значение многочлена в точке
             for (int i = 0; i < data.getRowCount(); i++) {
                 out.writeDouble((Double) data.getValueAt(i, 0));
                 out.writeDouble((Double) data.getValueAt(i, 1));
+                out.writeDouble((Double) data.getValueAt(i, 2));
+                out.writeDouble((Double) data.getValueAt(i, 3));
             }
 // Закрыть поток вывода
             out.close();
@@ -338,7 +334,9 @@ class MainFrame extends JFrame {
 // Записать в поток вывода значения в точках
             for (int i = 0; i < data.getRowCount(); i++) {
                 out.println("Значение в точке " + data.getValueAt(i, 0)
-                        + " равно " + data.getValueAt(i, 1));
+                        + " равно " + data.getValueAt(i, 1) +
+                        " reverse value: " + data.getValueAt(i, 2) +
+                        " diffrence: " + data.getValueAt(i, 3));
             }
 // Закрыть поток
             out.close();

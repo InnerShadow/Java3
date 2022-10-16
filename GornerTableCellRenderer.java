@@ -17,8 +17,7 @@ public class GornerTableCellRenderer implements TableCellRenderer {
 // (иголкой). Применяется аналогия поиска иголки в стоге сена, в роли
 // стога сена - таблица
     private String needle = null;
-    private DecimalFormat formatter =
-            (DecimalFormat)NumberFormat.getInstance();
+    private DecimalFormat formatter = (DecimalFormat)NumberFormat.getInstance();
     public GornerTableCellRenderer() {
 // Показывать только 5 знаков после запятой
         formatter.setMaximumFractionDigits(5);
@@ -29,8 +28,7 @@ public class GornerTableCellRenderer implements TableCellRenderer {
 // Установить в качестве разделителя дробной части точку, а не
 // запятую. По умолчанию, в региональных настройках
 // Россия/Беларусь дробная часть отделяется запятой
-        DecimalFormatSymbols dottedDouble =
-                formatter.getDecimalFormatSymbols();
+        DecimalFormatSymbols dottedDouble = formatter.getDecimalFormatSymbols();
         dottedDouble.setDecimalSeparator('.');
         formatter.setDecimalFormatSymbols(dottedDouble);
 // Разместить надпись внутри панели

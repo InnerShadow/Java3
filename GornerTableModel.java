@@ -25,7 +25,7 @@ public class GornerTableModel extends AbstractTableModel {
     }
     public int getColumnCount() {
 // В данной модели два столбца
-        return 2;
+        return 4;
     }
     public int getRowCount() {
 // Вычислить количество точек между началом и концом отрезка
@@ -34,36 +34,49 @@ public class GornerTableModel extends AbstractTableModel {
     }
 
     public Object getValueAt(int row, int col) {
-// Вычислить значение X как НАЧАЛО_ОТРЕЗКА + ШАГ*НОМЕР_СТРОКИ
-        double x = from + step*row;
-        if (col==0) {
-// Если запрашивается значение 1-го столбца, то это X
-            return x;
-        } else {
-// Если запрашивается значение 2-го столбца, то это значение
-// многочлена
-            Double result = 0.0;
-// Вычисление значения в точке по схеме Горнера.
-// Вспомнить 1-ый курс и реализовать
-// ...
-
-            //TODO: Realaze Gorgner scheam
-
-            for(int i = coefficients.length - 1; i >= 0; i--){
-                result += coefficients[i] * Math.pow(x, coefficients.length - 1 - i);
+        double x = from + step * row;
+        Double result = 0.0;
+        switch (col) {
+            case 0:
+                return x;
+            case 1: {
+                for (int i = coefficients.length - 1; i >= 0; i--) {
+                    result += coefficients[i] * Math.pow(x, coefficients.length - 1 - i);
+                }
+                return result;
             }
-            return result;
+            case 2: {
+                for (int i = 0; i < coefficients.length; i++) {
+                    result += coefficients[i] * Math.pow(x, i);
+                }
+                return result;
+            }
+            case 3: {
+                double valForward = 0.f;
+                for (int i = coefficients.length - 1; i >= 0; i--) {
+                    valForward += coefficients[i] * Math.pow(x, coefficients.length - 1 - i);
+                }
+
+                double valReverse = 0.f;
+                for (int i = 0; i < coefficients.length; i++) {
+                    valReverse += coefficients[i] * Math.pow(x, i);
+                }
+                return valForward - valReverse;
+            }
         }
+
+        //TODO: Realaze Gorgner scheam
+
+        return result;
     }
     public String getColumnName(int col) {
         switch (col) {
-            case 0:
-// Название 1-го столбца
-                return "Значение X";
-            default:
-// Название 2-го столбца
-                return "Значение многочлена";
+            case 0: return "Значение X";
+            case 1: return "Forward value";
+            case 2: return "Reverse value";
+            case 3: return "Diffrence (forward - reverse)";
         }
+        return "";
     }
     public Class<?> getColumnClass(int col) {
 // И в 1-ом и во 2-ом столбце находятся значения типа Double
