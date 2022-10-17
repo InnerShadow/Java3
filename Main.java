@@ -121,6 +121,7 @@ class MainFrame extends JFrame {
                 renderer.setNeedle(value);
 // Обновить таблицу
                 getContentPane().repaint();
+
             }
         };
 // Добавить действие в меню "Таблица"

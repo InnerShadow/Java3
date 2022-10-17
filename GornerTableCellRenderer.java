@@ -16,6 +16,8 @@ public class GornerTableCellRenderer implements TableCellRenderer {
     // Ищем ячейки, строковое представление которых совпадает с needle
 // (иголкой). Применяется аналогия поиска иголки в стоге сена, в роли
 // стога сена - таблица
+    int clue = 0;
+    boolean IsPrevFirstColumBlack = true;
     private String needle = null;
     private DecimalFormat formatter = (DecimalFormat)NumberFormat.getInstance();
     public GornerTableCellRenderer() {
@@ -35,13 +37,18 @@ public class GornerTableCellRenderer implements TableCellRenderer {
         panel.add(label);
 // Установить выравнивание надписи по левому краю панели
         panel.setLayout(new FlowLayout(FlowLayout.LEFT));
+
+
     }
     public Component getTableCellRendererComponent(JTable table,
                                                    Object value, boolean isSelected, boolean hasFocus, int row, int col) {
+
 // Преобразовать double в строку с помощью форматировщика
         String formattedDouble = formatter.format(value);
 // Установить текст надписи равным строковому представлению числа
         label.setText(formattedDouble);
+
+
         if (col==1 && needle!=null && needle.equals(formattedDouble)) {
 // Номер столбца = 1 (т.е. второй столбец) + иголка не null
 // (значит что-то ищем) +
@@ -50,8 +57,40 @@ public class GornerTableCellRenderer implements TableCellRenderer {
             panel.setBackground(Color.RED);
         } else {
 // Иначе - в обычный белый
-            panel.setBackground(Color.WHITE);
+            boolean c = (clue % 4) == 0;
+            if(c){
+                if(IsPrevFirstColumBlack){
+                    panel.setBackground(Color.WHITE);
+                    IsPrevFirstColumBlack = false;
+                } else {
+                    panel.setBackground(Color.BLACK);
+                    IsPrevFirstColumBlack = true;
+                }
+                clue++;
+                return panel;
+            }
+            boolean b = (clue % 2) == 0;
+            if(b){
+                if(IsPrevFirstColumBlack){
+                    panel.setBackground(Color.BLACK);
+                } else {
+                    panel.setBackground(Color.WHITE);
+                }
+
+            } else {
+                if(IsPrevFirstColumBlack){
+                    panel.setBackground(Color.WHITE);
+                } else {
+                    panel.setBackground(Color.BLACK);
+                }
+
+            }
+            clue++;
         }
+
+
+
+
         return panel;
     }
     public void setNeedle(String needle) {

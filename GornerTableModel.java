@@ -71,10 +71,10 @@ public class GornerTableModel extends AbstractTableModel {
     }
     public String getColumnName(int col) {
         switch (col) {
-            case 0: return "Значение X";
+            case 0: return "Value of X";
             case 1: return "Forward value";
             case 2: return "Reverse value";
-            case 3: return "Diffrence (forward - reverse)";
+            case 3: return "Difference (forward - reverse)";
         }
         return "";
     }
