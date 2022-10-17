@@ -34,10 +34,10 @@ public class GornerTableCellRenderer implements TableCellRenderer {
         dottedDouble.setDecimalSeparator('.');
         formatter.setDecimalFormatSymbols(dottedDouble);
 // Разместить надпись внутри панели
+
         panel.add(label);
 // Установить выравнивание надписи по левому краю панели
         panel.setLayout(new FlowLayout(FlowLayout.LEFT));
-
 
     }
     public Component getTableCellRendererComponent(JTable table,
@@ -55,35 +55,42 @@ public class GornerTableCellRenderer implements TableCellRenderer {
 // значение иголки совпадает со значением ячейки таблицы -
 // окрасить задний фон панели в красный цвет
             panel.setBackground(Color.RED);
+            clue++;
         } else {
 // Иначе - в обычный белый
             boolean c = (clue % 4) == 0;
             if(c){
                 if(IsPrevFirstColumBlack){
+                    label.setForeground(Color.BLACK);
                     panel.setBackground(Color.WHITE);
                     IsPrevFirstColumBlack = false;
                 } else {
+                    label.setForeground(Color.WHITE);
                     panel.setBackground(Color.BLACK);
                     IsPrevFirstColumBlack = true;
                 }
                 clue++;
                 return panel;
             }
+
             boolean b = (clue % 2) == 0;
             if(b){
                 if(IsPrevFirstColumBlack){
+                    label.setForeground(Color.WHITE);
                     panel.setBackground(Color.BLACK);
                 } else {
+                    label.setForeground(Color.BLACK);
                     panel.setBackground(Color.WHITE);
                 }
 
             } else {
                 if(IsPrevFirstColumBlack){
+                    label.setForeground(Color.BLACK);
                     panel.setBackground(Color.WHITE);
                 } else {
+                    label.setForeground(Color.WHITE);
                     panel.setBackground(Color.BLACK);
                 }
-
             }
             clue++;
         }

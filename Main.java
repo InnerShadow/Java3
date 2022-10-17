@@ -222,6 +222,7 @@ class MainFrame extends JFrame {
         buttonCalc.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent ev) {
                 try {
+
 // Считать значения начала и конца отрезка, шага
                     Double from = Double.parseDouble(textFieldFrom.getText());
                     Double to = Double.parseDouble(textFieldTo.getText());
