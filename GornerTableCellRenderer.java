@@ -88,8 +88,8 @@ public class GornerTableCellRenderer implements TableCellRenderer {
                 }
             }
 
-            double copearValue = Double.valueOf(label.getText());
-            if(copearValue < EndOfDioposone && copearValue > BeginOfDioposone){
+            double compear = Double.valueOf(label.getText());
+            if(compear < EndOfDioposone && compear > BeginOfDioposone){
                 panel.setBackground(Color.ORANGE);
             }
 
