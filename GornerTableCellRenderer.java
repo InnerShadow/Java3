@@ -13,13 +13,13 @@ import javax.swing.table.TableCellRenderer;
 public class GornerTableCellRenderer implements TableCellRenderer {
     private JPanel panel = new JPanel();
     private JLabel label = new JLabel();
-    // Ищем ячейки, строковое представление которых совпадает с needle
-// (иголкой). Применяется аналогия поиска иголки в стоге сена, в роли
-// стога сена - таблица
+    private double BeginOfDioposone = 0.f;
+    private double EndOfDioposone = 0.f;
     int clue = 0;
     boolean IsPrevFirstColumBlack = true;
     private String needle = null;
     private DecimalFormat formatter = (DecimalFormat)NumberFormat.getInstance();
+
     public GornerTableCellRenderer() {
 // Показывать только 5 знаков после запятой
         formatter.setMaximumFractionDigits(5);
@@ -40,6 +40,20 @@ public class GornerTableCellRenderer implements TableCellRenderer {
         panel.setLayout(new FlowLayout(FlowLayout.LEFT));
 
     }
+
+    public void setBeginOfDioposone(double beginOfDioposone) {
+        BeginOfDioposone = beginOfDioposone;
+        
+    }
+
+    public void setEndOfDioposone(double endOfDioposone) {
+        EndOfDioposone = endOfDioposone;
+    }
+
+
+
+
+
     public Component getTableCellRendererComponent(JTable table,
                                                    Object value, boolean isSelected, boolean hasFocus, int row, int col) {
 
@@ -49,7 +63,7 @@ public class GornerTableCellRenderer implements TableCellRenderer {
         label.setText(formattedDouble);
 
 
-        if (col==1 && needle!=null && needle.equals(formattedDouble)) {
+        if (col == 1 && needle!=null && needle.equals(formattedDouble)) {
 // Номер столбца = 1 (т.е. второй столбец) + иголка не null
 // (значит что-то ищем) +
 // значение иголки совпадает со значением ячейки таблицы -
@@ -57,7 +71,14 @@ public class GornerTableCellRenderer implements TableCellRenderer {
             panel.setBackground(Color.RED);
             clue++;
         } else {
-// Иначе - в обычный белый
+
+            double copearValue = Double.valueOf(label.getText());
+            if(copearValue < EndOfDioposone && copearValue > BeginOfDioposone){
+                panel.setBackground(Color.ORANGE);
+                clue++;
+                return panel;
+            }
+
             boolean c = (clue % 4) == 0;
             if(c){
                 if(IsPrevFirstColumBlack){
@@ -94,9 +115,6 @@ public class GornerTableCellRenderer implements TableCellRenderer {
             }
             clue++;
         }
-
-
-
 
         return panel;
     }

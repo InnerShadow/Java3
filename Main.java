@@ -121,11 +121,33 @@ class MainFrame extends JFrame {
                 renderer.setNeedle(value);
 // Обновить таблицу
                 getContentPane().repaint();
+            }
+        };
+
+        Action searchDiaposineValueAction = new AbstractAction("Find values in dioposone") {
+            public void actionPerformed(ActionEvent event) {
+
+                String begin =
+                        JOptionPane.showInputDialog(MainFrame.this, "Enter begin of the dioposone:",
+                                "Enter begin of the dioposone", JOptionPane.QUESTION_MESSAGE);
+
+                String end = JOptionPane.showInputDialog(MainFrame.this, "Enter end of the dioposone",
+                        "Enter end of the dioposone", JOptionPane.QUESTION_MESSAGE);
+
+                double Begin = Double.valueOf(begin);
+                double End = Double.valueOf(end);
+
+
+                renderer.setBeginOfDioposone(Begin);
+                renderer.setEndOfDioposone(End);
+                getContentPane().repaint();
 
             }
         };
+
 // Добавить действие в меню "Таблица"
         searchValueMenuItem = tableMenu.add(searchValueAction);
+        searchValueMenuItem = tableMenu.add(searchDiaposineValueAction);
 // По умолчанию пункт меню является недоступным (данных ещѐ нет)
         searchValueMenuItem.setEnabled(false);
 
