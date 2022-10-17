@@ -24,12 +24,9 @@ public class GornerTableModel extends AbstractTableModel {
         return step;
     }
     public int getColumnCount() {
-// В данной модели два столбца
         return 4;
     }
     public int getRowCount() {
-// Вычислить количество точек между началом и концом отрезка
-// исходя из шага табулирования
         return Double.valueOf(Math.ceil((to-from)/step)).intValue()+1;
     }
 
