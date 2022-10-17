@@ -71,6 +71,9 @@ class MainFrame extends JFrame {
             }
         };
 
+        saveToGraphicsMenuItem = fileMenu.add(saveToGraphicsAction);
+        saveToGraphicsMenuItem.setEnabled(false);
+
         Action saveToCSVAction = new AbstractAction("Save as CSV file") {
             public void actionPerformed(ActionEvent event) {
                 if (fileChooser == null) {
@@ -84,9 +87,6 @@ class MainFrame extends JFrame {
                 }
             }
         };
-
-        saveToGraphicsMenuItem = fileMenu.add(saveToGraphicsAction);
-        saveToGraphicsMenuItem.setEnabled(false);
 
         saveToCVSMenuItem = fileMenu.add(saveToCSVAction);
         saveToCVSMenuItem.setEnabled(false);
@@ -251,8 +251,10 @@ class MainFrame extends JFrame {
         try {
             PrintStream out = new PrintStream(new FileOutputStream(selectedFile));
             for (int i = 0; i < data.getRowCount(); i++) {
-                out.println(String.valueOf(data.getValueAt(i, 0)) + "," + String.valueOf(data.getValueAt(i, 1)) + "," +
-                        String.valueOf(data.getValueAt(i, 3)) + "," + String.valueOf(data.getValueAt(i, 4)));
+                out.println(String.valueOf(data.getValueAt(i, 0)) + "," +
+                        String.valueOf(data.getValueAt(i, 1)) + "," +
+                        String.valueOf(data.getValueAt(i, 3)) + "," +
+                        String.valueOf(data.getValueAt(i, 4)));
             }
             out.close();
         } catch (Exception e) {
