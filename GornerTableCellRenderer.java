@@ -43,7 +43,7 @@ public class GornerTableCellRenderer implements TableCellRenderer {
 
     public void setBeginOfDioposone(double beginOfDioposone) {
         BeginOfDioposone = beginOfDioposone;
-        
+
     }
 
     public void setEndOfDioposone(double endOfDioposone) {
@@ -71,13 +71,6 @@ public class GornerTableCellRenderer implements TableCellRenderer {
             panel.setBackground(Color.RED);
             clue++;
         } else {
-
-            double copearValue = Double.valueOf(label.getText());
-            if(copearValue < EndOfDioposone && copearValue > BeginOfDioposone){
-                panel.setBackground(Color.ORANGE);
-                clue++;
-                return panel;
-            }
 
             boolean c = (clue % 4) == 0;
             if(c){
@@ -113,6 +106,12 @@ public class GornerTableCellRenderer implements TableCellRenderer {
                     panel.setBackground(Color.BLACK);
                 }
             }
+
+            double copearValue = Double.valueOf(label.getText());
+            if(copearValue < EndOfDioposone && copearValue > BeginOfDioposone){
+                panel.setBackground(Color.ORANGE);
+            }
+
             clue++;
         }
 
